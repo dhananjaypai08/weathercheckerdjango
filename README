@@ -1,4 +1,6 @@
 - To Run the server
-- type $`python manage.py runserver` in the terminal
+- type `pip install -r requirements.txt` in the terminal.
+- If no erros then ,
+- type `python manage.py runserver` in the terminal
 - Head over to `http://127.0.0.1:8000/`
 - API Provider - openweathermap.org
