@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather-Checker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img src="https://tse4.mm.bing.net/th?id=OIP.EmG8bQ4PT6ql6KU7WM5QAAHaEK&pid=Api&P=0&w=299&h=168" alt="" width="80" height="50" class="d-inline-block align-text-top">
+            Check Weather of any city
+          </a>
+        </div>
+      </nav>
+    </div>
+    <hr>
+    <div class="container">
+        <form action="/" method="POST"> {% csrf_token %}
+        <div class="input-group">
+            <span class="input-group-text">Enter any city</span>
+            <input name="city" type="text" aria-label="First name" class="form-control" placeholder="Eg: Mumbai" required=True>
+          </div>
+          <button type="submit" class="btn btn-outline-success">Submit</button>
+        </form>
+    </div>
+    <br>
+    <div class="container">
+        {% if signal == 0 %}
+        <div class="alert alert-warning d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              Please Enter a correct city
+            </div>
+        </div>
+        {% elif signal == 1 %}
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              Sorry Couldn't fetch the details. Maybe the City that you entered is not available in the API coverage.
+            </div>
+          </div>
+        {% elif signal == 2 %}
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </symbol>
+        </svg>
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+            <div>
+              Data Generated Successfully!
+            </div>
+          </div>
+          <br>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Data fetched contains some interanal Parameters provided by the API and can be ignored.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <br>
+          {% for key, value in details.items %}
+            
+            {% if key == "weather_icon" %}
+            <figure class="image is-50x50">
+                
+                <center>
+                    <h6>Weather Image </h6>
+                <img src="http://openweathermap.org/img/w/{{details.weather_icon}}.png" alt="Image cannot be found"><br>
+                </center>
+            </figure>
+            
+            {% endif %}
+          <div class="row justify-content-center">
+            {{ forloop.counter }}
+            <div class="col-4">
+              {{key}}
+            </div>
+            <div class="col-4">
+              {{value}}
+            </div>
+          </div>
+          
+          <br>
+          {% endfor %}
+
+
+        {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>
