@@ -4,3 +4,10 @@
 - type `python manage.py runserver` in the terminal
 - Head over to `http://127.0.0.1:8000/`
 - API Provider - openweathermap.org
+- Docker image Building
+  - `docker build -f Dockerfile .` (This will create an image with none name and tag)
+  - `docker images` (copy the image_id)
+  - `docker image tag <image_id> projectname:version` (eg for projectname:version -> weatherchecker:latest) default tag is latest.
+  - `docker run --publish 8000:8000 projectname:version`
+  - open docker desktop or just copy this link `http://0.0.0.0:8000/` and paste it in browser. 
+  - If setup is successfull it will run the server.
